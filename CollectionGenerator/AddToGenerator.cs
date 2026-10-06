@@ -140,7 +140,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
                 else {
                     StringBuilder.Append(", ");
                 }
-                StringBuilder.Append("out ");
+                StringBuilder.Append("out @");
                 StringBuilder.Append(ArrayType.ToDisplayString());
                 StringBuilder.Append(" @");
                 StringBuilder.Append(Group.Key);
