@@ -41,10 +41,10 @@ public sealed class AddToGenerator : IIncrementalGenerator {
                         return null;
                     }
 
-                    return new AddToInfo(FieldOrProperty, TargetArrays);
+                    return (AddToInfo?)new AddToInfo(FieldOrProperty, TargetArrays);
                 })
             .Where(static (AddToCollectionInfo) => AddToCollectionInfo is not null)
-            .Select(static (AddToCollectionInfo, CancellationToken) => AddToCollectionInfo!);
+            .Select(static (AddToCollectionInfo, CancellationToken) => AddToCollectionInfo!.Value);
 
         Context.RegisterPostInitializationOutput(
             GenerateAttribute
@@ -129,5 +129,5 @@ public sealed class AddToGenerator : IIncrementalGenerator {
         Context.AddSource($"{Type.Name}.AddToCollection.g.cs", StringBuilder.ToString());
     }
 
-    private sealed record AddToInfo(ISymbol FieldOrProperty, List<string> TargetArrays);
+    private readonly record struct AddToInfo(ISymbol FieldOrProperty, List<string> TargetArrays);
 }
