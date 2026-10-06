@@ -6,7 +6,7 @@ namespace CollectionGenerator;
 [Generator]
 public sealed class AddToGenerator : IIncrementalGenerator {
     public void Initialize(IncrementalGeneratorInitializationContext Context) {
-        IncrementalValuesProvider<AddToInfo> AddToCollectionInfos = Context.SyntaxProvider
+        IncrementalValuesProvider<AddToInfo> AddToInfos = Context.SyntaxProvider
             .ForAttributeWithMetadataName("CollectionGenerator.AddToAttribute",
                 static (Node, CancellationToken) => true,
                 static (Context, CancellationToken) => {
@@ -43,17 +43,17 @@ public sealed class AddToGenerator : IIncrementalGenerator {
 
                     return (AddToInfo?)new AddToInfo(FieldOrProperty, TargetArrays);
                 })
-            .Where(static (AddToCollectionInfo) => AddToCollectionInfo is not null)
-            .Select(static (AddToCollectionInfo, CancellationToken) => AddToCollectionInfo!.Value);
+            .Where(static (AddToInfo) => AddToInfo is not null)
+            .Select(static (AddToInfo, CancellationToken) => AddToInfo!.Value);
 
         Context.RegisterPostInitializationOutput(
             GenerateAttribute
         );
 
         Context.RegisterSourceOutput(
-            AddToCollectionInfos.Collect(),
-            static (Context, AddToCollectionInfos) => {
-                foreach (IGrouping<ISymbol?, AddToInfo> Group in AddToCollectionInfos.GroupBy(AddToCollectionInfo => AddToCollectionInfo.FieldOrProperty.ContainingType, SymbolEqualityComparer.Default)) {
+            AddToInfos.Collect(),
+            static (Context, AddToInfos) => {
+                foreach (IGrouping<ISymbol?, AddToInfo> Group in AddToInfos.GroupBy(AddToInfo => AddToInfo.FieldOrProperty.ContainingType, SymbolEqualityComparer.Default)) {
                     if (Group.Key is not INamedTypeSymbol Type) {
                         continue;
                     }
@@ -78,9 +78,9 @@ public sealed class AddToGenerator : IIncrementalGenerator {
             """);
     }
 
-    private static void GenerateStaticConstructor(SourceProductionContext Context, INamedTypeSymbol Type, IEnumerable<AddToInfo> AddToCollectionInfos) {
-        IEnumerable<IGrouping<string, (string ArrayName, string FieldOrPropertyName)>> Groups = AddToCollectionInfos
-            .SelectMany(AddToCollectionInfo => AddToCollectionInfo.TargetArrays.Select(Name => (Name, AddToCollectionInfo.FieldOrProperty.Name)))
+    private static void GenerateStaticConstructor(SourceProductionContext Context, INamedTypeSymbol Type, IEnumerable<AddToInfo> AddToInfos) {
+        IEnumerable<IGrouping<string, (string ArrayName, string FieldOrPropertyName)>> Groups = AddToInfos
+            .SelectMany(AddToInfo => AddToInfo.TargetArrays.Select(Name => (Name, AddToInfo.FieldOrProperty.Name)))
             .GroupBy(Entry => Entry.Item1);
 
         StringBuilder StringBuilder = new();
@@ -126,7 +126,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
         StringBuilder.AppendLine("    }");
         StringBuilder.AppendLine("}");
 
-        Context.AddSource($"{Type.Name}.AddToCollection.g.cs", StringBuilder.ToString());
+        Context.AddSource($"{Type.Name}.AddTo.g.cs", StringBuilder.ToString());
     }
 
     private readonly record struct AddToInfo(ISymbol FieldOrProperty, List<string> TargetArrays);
