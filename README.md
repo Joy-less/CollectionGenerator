@@ -1,5 +1,7 @@
 # CollectionGenerator
 
+[![NuGet](https://img.shields.io/nuget/v/CollectionGenerator.svg)](https://www.nuget.org/packages/CollectionGenerator)
+
 Generates collections from members in C#.
 
 ## Example
