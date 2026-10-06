@@ -74,6 +74,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
             public sealed class AddToAttribute(params string[] ArrayNames) : System.Attribute {
                 public string[] ArrayNames { get; } = ArrayNames;
             }
+
             """);
     }
 
