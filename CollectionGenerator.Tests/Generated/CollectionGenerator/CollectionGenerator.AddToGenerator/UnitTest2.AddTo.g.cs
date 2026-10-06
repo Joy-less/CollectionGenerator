@@ -4,8 +4,8 @@
 
 namespace CollectionGenerator.Tests;
 
-partial class UnitTest2 {
-    static UnitTest2() {
+partial class @UnitTest2 {
+    static @UnitTest2() {
         MyCollection = [
             TestStringField,
             TestStringProperty,

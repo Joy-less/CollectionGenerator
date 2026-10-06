@@ -79,6 +79,8 @@ public sealed class AddToGenerator : IIncrementalGenerator {
     }
 
     private static void GenerateStaticConstructor(SourceProductionContext Context, INamedTypeSymbol Type, IEnumerable<AddToInfo> AddToInfos) {
+        bool HasStaticConstructor = Type.StaticConstructors.Any(static (StaticConstructor) => !StaticConstructor.IsImplicitlyDeclared);
+
         IEnumerable<IGrouping<string, (string ArrayName, string FieldOrPropertyName)>> Groups = AddToInfos
             .SelectMany(AddToInfo => AddToInfo.TargetArrays.Select(Name => (Name, AddToInfo.FieldOrProperty.Name)))
             .GroupBy(Entry => Entry.Item1);
@@ -102,12 +104,46 @@ public sealed class AddToGenerator : IIncrementalGenerator {
             StringBuilder.Append("record ");
         }
         StringBuilder.Append(Type.IsValueType ? "struct " : "class ");
+        StringBuilder.Append('@');
         StringBuilder.Append(Type.Name);
         StringBuilder.AppendLine(" {");
 
-        StringBuilder.Append("    static ");
-        StringBuilder.Append(Type.Name);
-        StringBuilder.AppendLine("() {");
+        if (HasStaticConstructor) {
+            StringBuilder.Append("    private static void @");
+            StringBuilder.Append(Type.Name);
+            StringBuilder.Append("_AddTo");
+            StringBuilder.Append("(");
+
+            bool IsFirst = true;
+            foreach (IGrouping<string, (string ArrayName, string FieldOrPropertyName)> Group in Groups) {
+                ITypeSymbol? ArrayType = Type.GetMembers(Group.Key).FirstOrDefault() switch {
+                    IPropertySymbol Property => Property.Type,
+                    IFieldSymbol Field => Field.Type,
+                    _ => null
+                };
+                if (ArrayType is null) {
+                    continue;
+                }
+
+                if (IsFirst) {
+                    IsFirst = false;
+                }
+                else {
+                    StringBuilder.Append(", ");
+                }
+                StringBuilder.Append("ref ");
+                StringBuilder.Append(ArrayType.ToDisplayString());
+                StringBuilder.Append(" @");
+                StringBuilder.Append(Group.Key);
+            }
+
+            StringBuilder.AppendLine(") {");
+        }
+        else {
+            StringBuilder.Append("    static @");
+            StringBuilder.Append(Type.Name);
+            StringBuilder.AppendLine("() {");
+        }
 
         foreach (IGrouping<string, (string ArrayName, string FieldOrPropertyName)> Group in Groups) {
             StringBuilder.Append("        ");
