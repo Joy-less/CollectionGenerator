@@ -6,9 +6,9 @@ namespace CollectionGenerator.Tests;
 
 partial class @UnitTest1 {
     static @UnitTest1() {
-        MyCollection = [
-            TestString1,
-            TestString2,
+        @MyCollection = [
+            @TestString1,
+            @TestString2,
         ];
     }
 }

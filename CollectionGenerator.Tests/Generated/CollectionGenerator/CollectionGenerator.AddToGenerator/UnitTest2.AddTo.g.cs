@@ -6,16 +6,16 @@ namespace CollectionGenerator.Tests;
 
 partial class @UnitTest2 {
     static @UnitTest2() {
-        MyCollection = [
-            TestStringField,
-            TestStringProperty,
-            TestIntProperty,
+        @MyCollection = [
+            @TestStringField,
+            @TestStringProperty,
+            @TestIntProperty,
         ];
-        MyIntCollection = [
-            TestIntProperty,
+        @MyIntCollection = [
+            @TestIntProperty,
         ];
-        MyNumberCollection = [
-            TestIntProperty,
+        @MyNumberCollection = [
+            @TestIntProperty,
         ];
     }
 }

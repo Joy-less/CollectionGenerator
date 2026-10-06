@@ -46,9 +46,9 @@ namespace ExampleNamespace;
 
 partial class ExampleClass {
     static ExampleClass() {
-        MyCollection = [
-            TestString1,
-            TestString2,
+        @MyCollection = [
+            @TestString1,
+            @TestString2,
         ];
     }
 }
@@ -89,9 +89,9 @@ namespace ExampleNamespace;
 
 partial class @ExampleClass {
     private static void @ExampleClass_AddTo(out @System.Collections.Immutable.ImmutableArray<string> @MyCollection) {
-        MyCollection = [
-            TestString1,
-            TestString2,
+        @MyCollection = [
+            @TestString1,
+            @TestString2,
         ];
     }
 }

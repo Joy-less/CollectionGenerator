@@ -159,7 +159,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
         }
 
         foreach (IGrouping<string, (string ArrayName, string FieldOrPropertyName)> Group in Groups) {
-            StringBuilder.Append("        ");
+            StringBuilder.Append("        @");
             StringBuilder.Append(Group.Key);
             StringBuilder.Append("""
                  = [
@@ -167,7 +167,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
                 """);
 
             foreach ((string ArrayName, string FieldOrPropertyName) in Group) {
-                StringBuilder.Append("            ");
+                StringBuilder.Append("            @");
                 StringBuilder.Append(FieldOrPropertyName);
                 StringBuilder.Append("""
                     ,
