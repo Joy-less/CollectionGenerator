@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace CollectionGenerator.Tests;
+namespace @CollectionGenerator.Tests;
 
 partial class @UnitTest3 {
     private static void @UnitTest3_AddTo(out @System.Collections.Immutable.ImmutableArray<string> @MyCollectionField, out @System.Collections.Immutable.ImmutableArray<string> @MyCollectionProperty) {

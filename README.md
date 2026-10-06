@@ -42,7 +42,7 @@ public sealed class AddToAttribute(params string[] ArrayNames) : System.Attribut
 
 #nullable enable
 
-namespace ExampleNamespace;
+namespace @ExampleNamespace;
 
 partial class ExampleClass {
     static ExampleClass() {
@@ -85,7 +85,7 @@ Generates:
 
 #nullable enable
 
-namespace ExampleNamespace;
+namespace @ExampleNamespace;
 
 partial class @ExampleClass {
     private static void @ExampleClass_AddTo(out @System.Collections.Immutable.ImmutableArray<string> @MyCollection) {

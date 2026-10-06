@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace CollectionGenerator.Tests;
+namespace @CollectionGenerator.Tests;
 
 partial class @UnitTest1 {
     static @UnitTest1() {

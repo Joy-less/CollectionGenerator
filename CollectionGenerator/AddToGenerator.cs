@@ -94,7 +94,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
             """);
 
         if (!Type.ContainingNamespace.IsGlobalNamespace) {
-            StringBuilder.Append("namespace ");
+            StringBuilder.Append("namespace @");
             StringBuilder.Append(Type.ContainingNamespace.ToDisplayString());
             StringBuilder.Append("""
                 ;
