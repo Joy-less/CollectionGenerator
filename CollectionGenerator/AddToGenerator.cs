@@ -53,7 +53,7 @@ public sealed class AddToGenerator : IIncrementalGenerator {
         Context.RegisterSourceOutput(
             AddToInfos.Collect(),
             static (Context, AddToInfos) => {
-                foreach (IGrouping<ISymbol?, AddToInfo> Group in AddToInfos.GroupBy(AddToInfo => AddToInfo.FieldOrProperty.ContainingType, SymbolEqualityComparer.Default)) {
+                foreach (IGrouping<ISymbol?, AddToInfo> Group in AddToInfos.GroupBy(static (AddToInfo) => AddToInfo.FieldOrProperty.ContainingType, SymbolEqualityComparer.Default)) {
                     if (Group.Key is not INamedTypeSymbol Type) {
                         continue;
                     }
