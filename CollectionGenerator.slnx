@@ -1,0 +1,4 @@
+<Solution>
+    <Project Path="CollectionGenerator/CollectionGenerator.csproj" />
+    <Project Path="CollectionGenerator.Tests/CollectionGenerator.Tests.csproj" />
+</Solution>
