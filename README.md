@@ -44,8 +44,8 @@ public sealed class AddToAttribute(params string[] ArrayNames) : System.Attribut
 
 namespace @ExampleNamespace;
 
-partial class ExampleClass {
-    static ExampleClass() {
+partial class @ExampleClass {
+    static @ExampleClass() {
         @MyCollection = [
             @TestString1,
             @TestString2,
