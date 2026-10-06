@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-		<VersionPrefix>2.0</VersionPrefix>
+        <VersionPrefix>2.0</VersionPrefix>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
@@ -10,8 +10,8 @@
 
     <PropertyGroup>
         <IncludeBuildOutput>false</IncludeBuildOutput>
-		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-		
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
 
